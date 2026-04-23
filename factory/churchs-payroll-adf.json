@@ -1,0 +1,15 @@
+{
+	"name": "churchs-payroll-adf",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "aa6ecd5e-fa8d-479b-823e-6dc3051006d4",
+		"tenantId": "593fa49a-b093-407c-9f67-1f50b77cb432"
+	}
+}
