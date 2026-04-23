@@ -1,0 +1,7 @@
+{
+	"name": "PL_Churchs_Payroll_ETL",
+	"properties": {
+		"description": "End to end payroll ETL\npipeline combining SynergySuite\nand FocusPOS data sources\ninto unified Target Output\nfollowing Medallion Architecture",
+		"annotations": []
+	}
+}
