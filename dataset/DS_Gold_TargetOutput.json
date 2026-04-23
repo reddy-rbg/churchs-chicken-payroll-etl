@@ -1,0 +1,81 @@
+{
+	"name": "DS_Gold_TargetOutput",
+	"properties": {
+		"description": "Gold layer dataset for\nfinal Target Output table.\nContains merged payroll data\nfrom SynergySuite and FocusPOS.\nDestination: dbo.target_output",
+		"linkedServiceName": {
+			"referenceName": "LS_SQLDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Employee_name",
+				"type": "varchar"
+			},
+			{
+				"name": "StoreID",
+				"type": "varchar"
+			},
+			{
+				"name": "Week",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "E_Regular_hours",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "E_overtime_hours",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "E_PTO_Pay_Hours",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "E_Sick_Pay_Hours",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "E_Back_Pay_Hours",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "E_Back_Pay_Dollars",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "E_Tips_Dollars",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "#week_end_date",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "target_output"
+		}
+	}
+}
