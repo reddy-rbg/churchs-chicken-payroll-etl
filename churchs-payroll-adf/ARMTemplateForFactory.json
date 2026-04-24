@@ -229,7 +229,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/poreddya7259@uhcl.edu/03_silver_merge"
+							"notebookPath": "/Users/poreddya7259@uhcl.edu/silver_merge"
 						},
 						"linkedServiceName": {
 							"referenceName": "LS_Databricks",
