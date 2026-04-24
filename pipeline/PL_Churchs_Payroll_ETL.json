@@ -2,6 +2,377 @@
 	"name": "PL_Churchs_Payroll_ETL",
 	"properties": {
 		"description": "End to end payroll ETL\npipeline combining SynergySuite\nand FocusPOS data sources\ninto unified Target Output\nfollowing Medallion Architecture",
+		"activities": [
+			{
+				"name": "Copy_Synergy_Landing_To_Bronze",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"deleteFilesAfterCompletion": false
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Landing_Synergy",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Bronze_Synergy",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy_Focus_Landing_To_Bronze",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"deleteFilesAfterCompletion": false
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Landing_Focus",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Bronze_Focus",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Run_Synergy_Bronze_Silver",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Copy_Synergy_Landing_To_Bronze",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/poreddya7259@uhcl.edu/synergysuite_bronze_silver"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_Databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Run_Focus_Bronze_Silver",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Copy_Focus_Landing_To_Bronze",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/poreddya7259@uhcl.edu/focuspos_bronze_silver"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_Databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Run_Silver_Merge",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Run_Synergy_Bronze_Silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Run_Focus_Bronze_Silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/poreddya7259@uhcl.edu/03_silver_merge"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_Databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Copy_Gold_To_SQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Run_Silver_Merge",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.target_output",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ID",
+									"type": "int",
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "Employee_name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Employee_name",
+									"type": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "StoreID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "StoreID",
+									"type": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Week",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Week",
+									"type": "int",
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "E_Regular_hours",
+									"type": "String"
+								},
+								"sink": {
+									"name": "E_Regular_hours",
+									"type": "float",
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "E_overtime_hours",
+									"type": "String"
+								},
+								"sink": {
+									"name": "E_overtime_hours",
+									"type": "float",
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "E_PTO_Pay_Hours",
+									"type": "String"
+								},
+								"sink": {
+									"name": "E_PTO_Pay_Hours",
+									"type": "float",
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "E_Sick_Pay_Hours",
+									"type": "String"
+								},
+								"sink": {
+									"name": "E_Sick_Pay_Hours",
+									"type": "float",
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "E_Back_Pay_Hours",
+									"type": "String"
+								},
+								"sink": {
+									"name": "E_Back_Pay_Hours",
+									"type": "float",
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "E_Back_Pay_Dollars",
+									"type": "String"
+								},
+								"sink": {
+									"name": "E_Back_Pay_Dollars",
+									"type": "float",
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "E_Tips_Dollars",
+									"type": "String"
+								},
+								"sink": {
+									"name": "E_Tips_Dollars",
+									"type": "float",
+									"precision": 15
+								}
+							},
+							{
+								"source": {
+									"name": "week_end_date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "#week_end_date",
+									"type": "date"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Gold_MergedPayroll",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_SQL_TargetOutput",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
 		"annotations": []
 	}
 }

@@ -1,0 +1,77 @@
+{
+	"name": "DS_Gold_MergedPayroll",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "merged_payroll.csv",
+				"folderPath": "payroll",
+				"fileSystem": "gold"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "Employee_name",
+				"type": "String"
+			},
+			{
+				"name": "StoreID",
+				"type": "String"
+			},
+			{
+				"name": "Week",
+				"type": "String"
+			},
+			{
+				"name": "E_Regular_hours",
+				"type": "String"
+			},
+			{
+				"name": "E_overtime_hours",
+				"type": "String"
+			},
+			{
+				"name": "E_PTO_Pay_Hours",
+				"type": "String"
+			},
+			{
+				"name": "E_Sick_Pay_Hours",
+				"type": "String"
+			},
+			{
+				"name": "E_Back_Pay_Hours",
+				"type": "String"
+			},
+			{
+				"name": "E_Back_Pay_Dollars",
+				"type": "String"
+			},
+			{
+				"name": "E_Tips_Dollars",
+				"type": "String"
+			},
+			{
+				"name": "week_end_date",
+				"type": "String"
+			},
+			{
+				"name": "Source",
+				"type": "String"
+			}
+		]
+	}
+}

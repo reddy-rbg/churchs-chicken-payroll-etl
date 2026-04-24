@@ -1,0 +1,19 @@
+{
+	"name": "DS_Bronze_Focus",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "FocusPOS Input.xlsx",
+				"folderPath": "focuspos",
+				"fileSystem": "bronze"
+			}
+		}
+	}
+}

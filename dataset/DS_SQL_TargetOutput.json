@@ -1,0 +1,74 @@
+{
+	"name": "DS_SQL_TargetOutput",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Employee_name",
+				"type": "varchar"
+			},
+			{
+				"name": "StoreID",
+				"type": "varchar"
+			},
+			{
+				"name": "Week",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "E_Regular_hours",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "E_overtime_hours",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "E_PTO_Pay_Hours",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "E_Sick_Pay_Hours",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "E_Back_Pay_Hours",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "E_Back_Pay_Dollars",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "E_Tips_Dollars",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "#week_end_date",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "target_output"
+		}
+	}
+}

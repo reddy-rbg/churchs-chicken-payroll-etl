@@ -1,0 +1,19 @@
+{
+	"name": "DS_Bronze_Synergy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "SynergySuite Input.xlsx",
+				"folderPath": "synergysuite ",
+				"fileSystem": "bronze"
+			}
+		}
+	}
+}
