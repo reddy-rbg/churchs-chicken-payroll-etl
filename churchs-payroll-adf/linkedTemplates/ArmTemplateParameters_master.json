@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "churchs-payroll-adf"
+		},
+		"LS_DataLake_accountKey": {
+			"value": ""
+		},
+		"LS_Databricks_accessToken": {
+			"value": ""
+		},
+		"LS_SQLDatabase_password": {
+			"value": ""
+		},
+		"LS_DataLake_properties_typeProperties_url": {
+			"value": "https://churchspayrollstorage.dfs.core.windows.net/"
+		},
+		"LS_Databricks_properties_typeProperties_existingClusterId": {
+			"value": "0423-213928-79g9i270"
+		},
+		"LS_KeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://churchs-payroll-kv.vault.azure.net/"
+		},
+		"LS_SQLDatabase_properties_typeProperties_server": {
+			"value": "churchs-payroll-server.database.windows.net"
+		},
+		"LS_SQLDatabase_properties_typeProperties_database": {
+			"value": "churchs-payroll-db"
+		},
+		"LS_SQLDatabase_properties_typeProperties_userName": {
+			"value": "payrolladmin"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
