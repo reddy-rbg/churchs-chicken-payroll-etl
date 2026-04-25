@@ -95,15 +95,15 @@ POS payroll report containing employee time and attendance records with clock-in
 | ID | INT | Employee Payroll ID |
 | Employee_name | VARCHAR(100) | Full employee name |
 | StoreID | VARCHAR(100) | Store number |
-| Week | INT | ISO week number |
-| E_Regular_hours | FLOAT | Regular hours worked |
-| E_overtime_hours | FLOAT | Overtime hours worked |
-| E_PTO_Pay_Hours | FLOAT | PTO hours |
-| E_Sick_Pay_Hours | FLOAT | Sick pay hours |
-| E_Back_Pay_Hours | FLOAT | Back pay hours |
-| E_Back_Pay_Dollars | FLOAT | Back pay amount |
-| E_Tips_Dollars | FLOAT | Tips earned |
-| #week_end_date | DATE | Week ending date (Saturday) |
+| Week | INT | Relative week number (1 = first week of pay period) |
+| E_Regular_hours | FLOAT | Regular hours worked (rounded to 2 decimals) |
+| E_overtime_hours | FLOAT | Overtime hours worked (rounded to 2 decimals) |
+| E_PTO_Pay_Hours | VARCHAR(20) | PTO hours (empty if not applicable) |
+| E_Sick_Pay_Hours | VARCHAR(20) | Sick pay hours (empty if not applicable) |
+| E_Back_Pay_Hours | VARCHAR(20) | Back pay hours (empty if not applicable) |
+| E_Back_Pay_Dollars | VARCHAR(20) | Back pay amount (empty if not applicable) |
+| E_Tips_Dollars | FLOAT | Tips earned (rounded to 2 decimals) |
+| #week_end_date | VARCHAR(20) | Week ending date (M/D/YYYY format) |
 
 ---
 
@@ -133,8 +133,10 @@ PL_Churchs_Payroll_ETL
 4. **Store ID mapping** — Extracted numeric store ID from full store name (e.g. FC3607 - S MAIN ST → 3607)
 5. **Tips column consolidation** — Combined Non_Cash_Tips and Declared_Tips into single E_Tips_Dollars column
 6. **SSN exclusion (PII)** — ID1 field (SSN) excluded, only ID2 (payroll ID) used
-7. **Week number derivation** — Calculated ISO week number from shift dates
+7. **Week number derivation** — Calculated relative week number (Week 1 = first week of pay period) from shift dates
 8. **Employee ID reconciliation** — Removed system placeholder rows (Taker, Order with ID dash)
+9. **Decimal precision** — Rounded Regular hours, OT hours and Tips to 2 decimal places
+10. **FocusPOS OT calculation** — Split total hours into Regular (capped at 8 hrs/shift) and OT (hours over 8) since FocusPOS has no separate OT column
 
 ---
 
