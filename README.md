@@ -198,7 +198,7 @@ churchs-chicken-payroll-etl/
 
 ## 👤 Author
 
-**Ajay Kumar
+Ajay Kumar Reddy Poreddy
 
 🔗 [GitHub](https://github.com/reddy-rbg)
 
