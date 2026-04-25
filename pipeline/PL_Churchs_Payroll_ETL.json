@@ -113,7 +113,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/poreddya7259@uhcl.edu/synergysuite_bronze_silver"
+					"notebookPath": "/Users/poreddya7259@uhcl.edu/churchs-chicken-payroll-etl/notebooks/synergysuite_bronze_silver"
 				},
 				"linkedServiceName": {
 					"referenceName": "LS_Databricks",
@@ -140,7 +140,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/poreddya7259@uhcl.edu/focuspos_bronze_silver"
+					"notebookPath": "/Users/poreddya7259@uhcl.edu/churchs-chicken-payroll-etl/notebooks/focuspos_bronze_silver"
 				},
 				"linkedServiceName": {
 					"referenceName": "LS_Databricks",
@@ -173,7 +173,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/poreddya7259@uhcl.edu/silver_merge"
+					"notebookPath": "/Users/poreddya7259@uhcl.edu/churchs-chicken-payroll-etl/notebooks/silver_merge"
 				},
 				"linkedServiceName": {
 					"referenceName": "LS_Databricks",
