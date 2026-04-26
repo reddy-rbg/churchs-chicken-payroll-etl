@@ -169,9 +169,9 @@ The pipeline is designed to support automated scheduling. If connected to live d
 churchs-chicken-payroll-etl/
 │
 ├── 📁 notebooks/                          
-│   ├── synergysuite_bronze_silver.ipynb   # Bronze → Silver (SynergySuite)
-│   ├── focuspos_bronze_silver.ipynb       # Bronze → Silver (FocusPOS)
-│   └── silver_merge.ipynb                # Silver → Gold merge
+│   ├── 1_synergysuite_bronze_silver.ipynb   # Bronze → Silver (SynergySuite)
+│   ├── 2_focuspos_bronze_silver.ipynb       # Bronze → Silver (FocusPOS)
+│   └── 3_silver_merge.ipynb                 # Silver → Gold merge
 │
 ├── 📁 pipeline/                           
 │   └── PL_Churchs_Payroll_ETL.json
@@ -187,8 +187,6 @@ churchs-chicken-payroll-etl/
 ├── README.md
 └── publish_config.json
 ```
-
----
 
 ## 🚀 How to Run
 
